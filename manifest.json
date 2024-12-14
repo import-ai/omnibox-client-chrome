@@ -5,13 +5,14 @@
     "description": "Reads the rendered HTML and sends it to a web service API.",
     "permissions": [
       "activeTab",
-      "scripting"
+      "scripting",
+      "storage"
     ],
     "background": {
       "service_worker": "background.js"
     },
     "action": {
-      "default_popup": "popup.html"
+      "default_popup": "popup/popup.html"
     },
     "content_scripts": [
       {
@@ -21,5 +22,6 @@
     ],
     "host_permissions": [
       "<all_urls>"
-    ]
+    ],
+    "options_page": "options/options.html"
   }
