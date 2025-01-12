@@ -1,7 +1,7 @@
 chrome.action.onClicked.addListener((tab) => {
     const htmlContent = document.documentElement.innerHTML;
     chrome.runtime.sendMessage(
-      { action: "sendHTML", data: htmlContent },
+      { action: "collect", data: htmlContent },
       (response) => {
         if (response.status === "success") {
           console.log("HTML sent successfully:", response.data);

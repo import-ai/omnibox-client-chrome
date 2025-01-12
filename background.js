@@ -1,12 +1,22 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "sendHTML") {
-    const apiUrl = `${request.baseUrl}/html`; // Use the user-defined base URL
+  if (request.action === "collect") {
+    const apiUrl = `${request.baseUrl}/api/v1/tasks`; // Use the new endpoint for HTML tasks
     fetch(apiUrl, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${request.apiKey}`
       },
-      body: JSON.stringify({ html: request.data })
+      body: JSON.stringify({
+        function: "collect",
+        html: request.data,
+        url: request.pageUrl, // Include the current page's URL
+        title: request.pageTitle, // Include the current page's title
+        namespace: request.namespace,
+        payload: {
+          spaceType: request.spaceType
+        }
+      })
     })
     .then(response => response.json())
     .then(data => {
