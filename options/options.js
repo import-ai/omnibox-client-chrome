@@ -1,16 +1,28 @@
 document.getElementById('saveButton').addEventListener('click', () => {
-    const apiBaseUrl = document.getElementById('apiBaseUrl').value;
-    chrome.storage.sync.set({ apiBaseUrl: apiBaseUrl }, () => {
-      console.log('API base URL saved:', apiBaseUrl);
-      alert('Settings saved');
-    });
+  const apiBaseUrl = document.getElementById('apiBaseUrl').value;
+  const apiKey = document.getElementById('apiKey').value;
+  const namespace = document.getElementById('namespace').value;
+  const spaceType = document.getElementById('spaceType').value;
+  chrome.storage.sync.set({ apiBaseUrl, apiKey, namespace, spaceType }, () => {
+    console.log('Settings saved:', { apiBaseUrl, apiKey, namespace, spaceType });
+    alert('Settings saved');
   });
-  
-  // Load the saved API base URL on options page load
-  document.addEventListener('DOMContentLoaded', () => {
-    chrome.storage.sync.get('apiBaseUrl', (data) => {
-      if (data.apiBaseUrl) {
-        document.getElementById('apiBaseUrl').value = data.apiBaseUrl;
-      }
-    });
+});
+
+// Load the saved settings on options page load
+document.addEventListener('DOMContentLoaded', () => {
+  chrome.storage.sync.get(['apiBaseUrl', 'apiKey', 'namespace', 'spaceType'], (data) => {
+    if (data.apiBaseUrl) {
+      document.getElementById('apiBaseUrl').value = data.apiBaseUrl;
+    }
+    if (data.apiKey) {
+      document.getElementById('apiKey').value = data.apiKey;
+    }
+    if (data.namespace) {
+      document.getElementById('namespace').value = data.namespace;
+    }
+    if (data.spaceType) {
+      document.getElementById('spaceType').value = data.spaceType;
+    }
   });
+});
