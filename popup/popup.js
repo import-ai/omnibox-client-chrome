@@ -34,6 +34,7 @@ function extractHtmlAndSend(pageUrl, pageTitle) {
       (response) => {
         if (response && response.status === "success") {
           console.log("HTML sent successfully:", response.data);
+          alert("HTML sent successfully.");
         } else {
           const errorMessage = response ? response.error : 'No response';
           console.error("Failed to send HTML:", errorMessage);
