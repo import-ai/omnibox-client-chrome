@@ -4,7 +4,6 @@ document.getElementById('saveButton').addEventListener('click', () => {
   const namespace = document.getElementById('namespace').value;
   const spaceType = document.getElementById('spaceType').value;
   chrome.storage.sync.set({ apiBaseUrl, apiKey, namespace, spaceType }, () => {
-    console.log('Settings saved:', { apiBaseUrl, apiKey, namespace, spaceType });
     alert('Settings saved');
   });
 });
