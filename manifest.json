@@ -1,27 +1,28 @@
 {
-    "manifest_version": 3,
-    "name": "HTML Reader Extension",
-    "version": "0.1.0",
-    "description": "Reads the rendered HTML and sends it to a web service API.",
-    "permissions": [
-      "activeTab",
-      "scripting",
-      "storage"
-    ],
-    "background": {
-      "service_worker": "background.js"
-    },
-    "action": {
-      "default_popup": "popup/popup.html"
-    },
-    "content_scripts": [
-      {
-        "matches": ["<all_urls>"],
-        "js": ["content.js"]
-      }
-    ],
-    "host_permissions": [
-      "<all_urls>"
-    ],
-    "options_page": "options/options.html"
-  }
+  "manifest_version": 3,
+  "name": "OmniBox Collector",
+  "version": "0.1.0",
+  "description": "Collect HTML content from web pages",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Collect page content",
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "options_page": "options/options.html"
+}

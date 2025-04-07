@@ -16,7 +16,6 @@ function extractHtmlAndSend(pageUrl, pageTitle) {
   // Retrieve the stored API base URL, API key, namespace, and space type
   chrome.storage.sync.get(['apiBaseUrl', 'apiKey', 'namespace', 'spaceType'], (data) => {
     const { apiBaseUrl, apiKey, namespace, spaceType } = data;
-    console.log({ apiBaseUrl, apiKey, namespace, spaceType, pageUrl, pageTitle });
 
     try {
       const url = new URL(apiBaseUrl);
@@ -33,7 +32,6 @@ function extractHtmlAndSend(pageUrl, pageTitle) {
       { action: "collect", data: htmlContent, baseUrl: apiBaseUrl, apiKey, namespace, spaceType, pageUrl, pageTitle },
       (response) => {
         if (response && response.status === "success") {
-          console.log("HTML sent successfully:", response.data);
           alert("HTML sent successfully.");
         } else {
           const errorMessage = response ? response.error : 'No response';
