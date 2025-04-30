@@ -1,11 +1,11 @@
 function extractHtmlAndSend(pageUrl, pageTitle) {
   const htmlContent = document.documentElement.outerHTML;
 
-  // Retrieve the stored API base URL, API key, namespace, and space type
+  // Retrieve the stored API base URL, API key, namespaceId, and space type
   chrome.storage.sync.get(
-    ['apiBaseUrl', 'apiKey', 'namespace', 'spaceType'],
+    ['apiBaseUrl', 'apiKey', 'namespaceId', 'spaceType'],
     (data) => {
-      const { apiBaseUrl, apiKey, namespace, spaceType } = data;
+      const { apiBaseUrl, apiKey, namespaceId, spaceType } = data;
 
       try {
         const url = new URL(apiBaseUrl);
@@ -24,7 +24,7 @@ function extractHtmlAndSend(pageUrl, pageTitle) {
           data: htmlContent,
           baseUrl: apiBaseUrl,
           apiKey,
-          namespace,
+          namespaceId,
           spaceType,
           pageUrl,
           pageTitle,

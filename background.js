@@ -1,6 +1,6 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'collect') {
-    const apiUrl = `${request.baseUrl}/api/v1/tasks/collect`; // Use the new endpoint for HTML tasks
+    const apiUrl = `${request.baseUrl}/api/v1/wizard/collect`;
     fetch(apiUrl, {
       method: 'POST',
       headers: {
@@ -9,9 +9,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       },
       body: JSON.stringify({
         html: request.data,
-        url: request.pageUrl, // Include the current page's URL
-        title: request.pageTitle, // Include the current page's title
-        namespace: request.namespace,
+        url: request.pageUrl,
+        title: request.pageTitle,
+        namespaceId: request.namespaceId,
         spaceType: request.spaceType,
       }),
     })
