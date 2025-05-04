@@ -11,8 +11,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         html: request.data,
         url: request.pageUrl,
         title: request.pageTitle,
-        namespaceId: request.namespaceId,
-        spaceType: request.spaceType,
+        namespace_id: request.namespaceId,
+        space_type: request.spaceType,
       }),
     })
       .then((response) => response.json())
@@ -34,6 +34,3 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true;
   }
 });
-
-// Remove the chrome.action.onClicked listener as it conflicts with the popup
-// The popup.js handles the click functionality instead
