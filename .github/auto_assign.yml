@@ -1,0 +1,11 @@
+addReviewers: true
+
+reviewers:
+  - Jonghakseo
+  - PatrykKuniczak
+
+addAssignees: author
+
+filterLabels:
+  exclude:
+    - dependencies

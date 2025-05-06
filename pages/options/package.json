@@ -1,0 +1,45 @@
+{
+  "name": "@extension/options",
+  "version": "0.4.3",
+  "description": "chrome extension - options",
+  "type": "module",
+  "private": true,
+  "sideEffects": true,
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "clean:node_modules": "pnpx rimraf node_modules",
+    "clean:turbo": "rimraf .turbo",
+    "clean": "pnpm clean:turbo && pnpm clean:node_modules",
+    "build": "vite build",
+    "dev": "vite build --mode development",
+    "lint": "eslint .",
+    "lint:fix": "pnpm lint --fix",
+    "prettier": "prettier . --write --ignore-path ../../.prettierignore",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@extension/i18n": "workspace:*",
+    "@extension/shared": "workspace:*",
+    "@extension/storage": "workspace:*",
+    "@extension/ui": "workspace:*",
+    "@hookform/resolvers": "^5.0.1",
+    "lodash-es": "^4.17.21",
+    "lucide-react": "^0.507.0",
+    "react-hook-form": "^7.56.2",
+    "sonner": "^2.0.3",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@extension/tailwindcss-config": "workspace:^",
+    "@extension/tsconfig": "workspace:*",
+    "@extension/vite-config": "workspace:*"
+  },
+  "postcss": {
+    "plugins": {
+      "tailwindcss": {},
+      "autoprefixer": {}
+    }
+  }
+}
