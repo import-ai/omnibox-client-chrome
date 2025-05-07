@@ -1,0 +1,52 @@
+{
+  "extensionDescription": {
+    "description": "扩展描述",
+    "message": "从网页采集内容"
+  },
+  "extensionName": {
+    "description": "扩展名",
+    "message": "OmniBox 采集器"
+  },
+  "setting_title": {
+    "message": "偏好设置"
+  },
+  "setting_submit": {
+    "message": "保存"
+  },
+  "setting_success": {
+    "message": "保存成功"
+  },
+  "spacetype_private": {
+    "message": "私有"
+  },
+  "spacetype_teamspace": {
+    "message": "团队"
+  },
+  "apikey_done": {
+    "message": "已获取 API Key"
+  },
+  "apikey_submit": {
+    "message": "登录来获取 API Key"
+  },
+  "collect_done": {
+    "message": "保存成功"
+  },
+  "collect_submit": {
+    "message": "采集"
+  },
+  "config_first": {
+    "message": "请先完成配置"
+  },
+  "alert_built": {
+    "message": "浏览器内置页面无法使用"
+  },
+  "http_error": {
+    "message": "HTTP 错误！状态：$STATUS$",
+    "placeholders": {
+      "status": {
+        "content": "$1",
+        "example": "401"
+      }
+    }
+  }
+}

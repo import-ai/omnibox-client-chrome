@@ -1,0 +1,52 @@
+{
+  "extensionDescription": {
+    "description": "Extension description",
+    "message": "Collect HTML content from web pages"
+  },
+  "extensionName": {
+    "description": "Extension name",
+    "message": "OmniBox Collector"
+  },
+  "setting_title": {
+    "message": "Extension Settings"
+  },
+  "setting_submit": {
+    "message": "Save"
+  },
+  "setting_success": {
+    "message": "Settings saved"
+  },
+  "spacetype_private": {
+    "message": "Private"
+  },
+  "spacetype_teamspace": {
+    "message": "Teamspace"
+  },
+  "apikey_done": {
+    "message": "API key obtained"
+  },
+  "apikey_submit": {
+    "message": "Log in to get your API Key"
+  },
+  "collect_done": {
+    "message": "Saved successfully"
+  },
+  "collect_submit": {
+    "message": "Collect"
+  },
+  "config_first": {
+    "message": "Please configure first"
+  },
+  "alert_built": {
+    "message": "The browser built-in page cannot be used"
+  },
+  "http_error": {
+    "message": "HTTP error! status: $STATUS$",
+    "placeholders": {
+      "status": {
+        "content": "$1",
+        "example": "401"
+      }
+    }
+  }
+}
