@@ -2,7 +2,7 @@ import { toast } from 'sonner';
 import { useState, useEffect } from 'react';
 import axios from '@extension/shared/lib/utils/axios';
 import { isValidStrictHttpRootDomain } from '@src/utils';
-import { FormControl, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@extension/ui';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@extension/ui';
 
 interface IProps {
   apiKey: string;
@@ -19,6 +19,12 @@ export default function Namespace(props: IProps) {
       name: string;
     }>
   >([]);
+  const handleChange = (val: string) => {
+    if (!val) {
+      return;
+    }
+    onChange(val);
+  };
 
   useEffect(() => {
     if (!baseUrl || !apiKey || !isValidStrictHttpRootDomain(baseUrl)) {
@@ -40,12 +46,10 @@ export default function Namespace(props: IProps) {
   }, [baseUrl, apiKey]);
 
   return (
-    <Select disabled={!baseUrl || !apiKey} value={value} onValueChange={onChange}>
-      <FormControl>
-        <SelectTrigger>
-          <SelectValue />
-        </SelectTrigger>
-      </FormControl>
+    <Select disabled={!baseUrl || !apiKey} value={value} onValueChange={handleChange}>
+      <SelectTrigger>
+        <SelectValue />
+      </SelectTrigger>
       <SelectContent>
         {data.map(item => (
           <SelectItem key={item.id} value={item.id}>

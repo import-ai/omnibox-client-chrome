@@ -1,3 +1,4 @@
+import { t } from '@extension/i18n';
 import { Button } from '@extension/ui';
 import { isValidStrictHttpRootDomain } from '@src/utils';
 
@@ -17,14 +18,14 @@ export default function ApiKey(props: IProps) {
   if (value) {
     return (
       <Button variant="outline" className="w-full" disabled>
-        已获取 API Key
+        {t('apikey_done')}
       </Button>
     );
   }
 
   return (
     <Button variant="outline" className="w-full" onClick={handleClick} disabled={!isValidStrictHttpRootDomain(baseUrl)}>
-      登录来获取 API Key
+      {t('apikey_submit')}
     </Button>
   );
 }

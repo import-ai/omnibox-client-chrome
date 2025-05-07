@@ -7,24 +7,46 @@
     "description": "Extension name",
     "message": "OmniBox Collector"
   },
-  "toggleTheme": {
-    "message": "Toggle theme"
+  "setting_title": {
+    "message": "Extension Settings"
   },
-  "loading": {
-    "message": "Loading..."
+  "setting_submit": {
+    "message": "Save"
   },
-  "greeting": {
-    "description": "Greeting message",
-    "message": "Hello, My name is $NAME$",
+  "setting_success": {
+    "message": "Settings saved"
+  },
+  "spacetype_private": {
+    "message": "Private"
+  },
+  "spacetype_teamspace": {
+    "message": "Teamspace"
+  },
+  "apikey_done": {
+    "message": "API key obtained"
+  },
+  "apikey_submit": {
+    "message": "Log in to get your API Key"
+  },
+  "collect_done": {
+    "message": "Saved successfully"
+  },
+  "collect_submit": {
+    "message": "Collect"
+  },
+  "config_first": {
+    "message": "Please configure first"
+  },
+  "alert_built": {
+    "message": "The browser built-in page cannot be used"
+  },
+  "http_error": {
+    "message": "HTTP error! status: $STATUS$",
     "placeholders": {
-      "name": {
+      "status": {
         "content": "$1",
-        "example": "John Doe"
+        "example": "401"
       }
     }
-  },
-  "hello": {
-    "description": "Placeholder example",
-    "message": "Hello $1"
   }
 }

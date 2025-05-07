@@ -1,3 +1,4 @@
+import { t } from '@extension/i18n';
 import { FormControl, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@extension/ui';
 
 interface IProps {
@@ -19,11 +20,11 @@ export default function SpaceType(props: IProps) {
       <SelectContent>
         {[
           {
-            label: 'Private',
+            label: t('spacetype_private'),
             value: 'private',
           },
           {
-            label: 'Teamspace',
+            label: t('spacetype_teamspace'),
             value: 'teamspace',
           },
         ].map(item => (

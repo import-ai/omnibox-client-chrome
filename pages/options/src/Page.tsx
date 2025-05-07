@@ -1,7 +1,7 @@
 import * as z from 'zod';
-// import { t } from '@extension/i18n';
 import { useEffect } from 'react';
 import ApiKey from './form/ApiKey';
+import { t } from '@extension/i18n';
 import { Toaster, toast } from 'sonner';
 import Namespace from './form/Namespace';
 import SpaceType from './form/SpaceType';
@@ -42,7 +42,7 @@ export default function Page() {
   const watchApiBaseUrl = form.watch('apiBaseUrl');
   const handleSubmit = (data: TForm) => {
     onChange(data).then(() => {
-      toast('Settings saved', { position: 'top-center' });
+      toast(t('setting_success'), { position: 'top-center' });
     });
   };
 
@@ -82,7 +82,7 @@ export default function Page() {
   return (
     <Card className="w-[460px]">
       <CardHeader>
-        <CardTitle className="text-2xl">Extension Settings</CardTitle>
+        <CardTitle className="text-2xl">{t('setting_title')}</CardTitle>
         {/* <CardDescription>Deploy your new project in one-click.</CardDescription> */}
       </CardHeader>
       <CardContent>
@@ -142,7 +142,7 @@ export default function Page() {
               )}
             />
             <Button type="submit" className="w-full">
-              Save
+              {t('setting_submit')}
             </Button>
           </form>
         </Form>

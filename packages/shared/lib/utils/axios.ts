@@ -1,3 +1,5 @@
+import { t } from '@extension/i18n';
+
 export default function axios(
   url: string,
   opts: {
@@ -54,9 +56,9 @@ export default function axios(
   }).then(response => {
     if (!response.ok) {
       if (response.status === 401) {
-        chrome.storage.local.remove(['apiKey', 'apiBaseUrl', 'namespaceId', 'spaceType']);
+        chrome.storage.sync.remove(['apiKey', 'namespaceId', 'spaceType']);
       }
-      return Promise.reject(new Error(`HTTP error! status: ${response.status}`));
+      return Promise.reject(new Error(t('http_error', `${response.status}`)));
     } else {
       return response.json();
     }

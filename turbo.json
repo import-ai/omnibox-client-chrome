@@ -21,9 +21,6 @@
       "outputs": ["../../dist/**", "dist/**"],
       "cache": false
     },
-    "e2e": {
-      "cache": false
-    },
     "type-check": {
       "cache": false
     },

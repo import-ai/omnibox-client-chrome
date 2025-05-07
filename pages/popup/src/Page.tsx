@@ -1,38 +1,69 @@
-import { toast } from 'sonner';
 import Wrapper from '@src/Wrapper';
+import { t } from '@extension/i18n';
 import { Button } from '@extension/ui';
+import { useState, useEffect } from 'react';
 import { useOption } from '@extension/shared';
+import extPage from '@extension/shared/lib/utils/ext-page';
 
 export default function Page() {
-  const { value } = useOption();
+  const { value, refetch } = useOption();
+  const [tabId, onTabId] = useState(-1);
+  const [loading, setLoading] = useState(false);
+  const [action, onAction] = useState(t('collect_submit'));
   const handleOption = () => {
     chrome.runtime.openOptionsPage();
   };
   const handleCollect = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-      if (tabs[0].id) {
-        chrome.tabs.sendMessage(tabs[0].id, { action: 'save', option: value }, response => {
-          if (response && response.error) {
-            toast(response.error, { position: 'top-center' });
-          } else {
-            toast('保存成功', { position: 'top-center' });
-          }
-        });
+    if (tabId <= 0) {
+      return;
+    }
+    setLoading(true);
+    chrome.tabs.sendMessage(tabId, { action: 'save', option: value }, response => {
+      setLoading(false);
+      if (response && response.error) {
+        onAction(response.error);
+        refetch();
+      } else {
+        onAction(t('collect_done'));
       }
+      onTabId(-1);
     });
   };
+
+  useEffect(() => {
+    chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+      if (!tabs[0].id) {
+        return;
+      }
+      if (extPage(tabs[0].url)) {
+        onTabId(0);
+        return;
+      }
+      onTabId(tabs[0].id);
+    });
+  }, []);
 
   if (!value.apiBaseUrl) {
     return (
       <Wrapper>
-        <Button onClick={handleOption}>Please configure first</Button>
+        <Button className="w-full" onClick={handleOption}>
+          {t('config_first')}
+        </Button>
       </Wrapper>
     );
   }
 
   return (
     <Wrapper>
-      <Button onClick={handleCollect}>Collect</Button>
+      {tabId === 0 ? (
+        <Button variant="destructive" className="w-full" disabled>
+          {t('alert_built')}
+        </Button>
+      ) : (
+        <Button className="w-full" loading={loading} disabled={tabId < 0} onClick={handleCollect}>
+          {action}
+        </Button>
+      )}
     </Wrapper>
   );
 }
