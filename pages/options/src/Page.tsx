@@ -7,7 +7,6 @@ import Namespace from './form/Namespace';
 import SpaceType from './form/SpaceType';
 import ApiBaseUrl from './form/APiBaseUrl';
 import { useForm } from 'react-hook-form';
-import { useOption } from '@extension/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Card,
@@ -33,20 +32,40 @@ const formSchema = z.object({
 type TForm = z.infer<typeof formSchema>;
 
 export default function Page() {
-  const { value, onChange } = useOption();
   const form = useForm<TForm>({
-    defaultValues: value,
+    defaultValues: {
+      apiKey: '',
+      apiBaseUrl: '',
+      namespaceId: '',
+      spaceType: '',
+    },
     resolver: zodResolver(formSchema),
   });
   const watchApiKey = form.watch('apiKey');
   const watchApiBaseUrl = form.watch('apiBaseUrl');
+  const handleBaseUrlChange = () => {
+    chrome.storage.sync.remove('apiKey').then(() => {
+      form.resetField('apiKey');
+      form.resetField('namespaceId');
+      form.resetField('spaceType');
+      form.trigger(['apiBaseUrl']);
+    });
+  };
   const handleSubmit = (data: TForm) => {
-    onChange(data).then(() => {
+    return chrome.storage.sync.set(data).then(() => {
       toast(t('setting_success'), { position: 'top-center' });
     });
   };
 
   useEffect(() => {
+    chrome.storage.sync.get(['apiKey', 'apiBaseUrl', 'namespaceId', 'spaceType']).then(data => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      Object.keys(data).forEach((key: any) => {
+        if (data[key]) {
+          form.setValue(key, data[key]);
+        }
+      });
+    });
     const focusFN = () => {
       chrome.storage.sync.get('apiKey', data => {
         if (data) {
@@ -60,24 +79,6 @@ export default function Page() {
       window.removeEventListener('focus', focusFN);
     };
   }, [form]);
-
-  useEffect(() => {
-    if (!value || !value.apiKey) {
-      return;
-    }
-    if (value.spaceType) {
-      form.setValue('spaceType', value.spaceType);
-    }
-    if (value.apiKey) {
-      form.setValue('apiKey', value.apiKey);
-    }
-    if (value.apiBaseUrl) {
-      form.setValue('apiBaseUrl', value.apiBaseUrl);
-    }
-    if (value.namespaceId) {
-      form.setValue('namespaceId', value.namespaceId);
-    }
-  }, [form, value]);
 
   return (
     <Card className="w-[460px]">
@@ -96,7 +97,7 @@ export default function Page() {
                 <FormItem>
                   <FormLabel>API Base URL</FormLabel>
                   <FormControl>
-                    <ApiBaseUrl {...field} />
+                    <ApiBaseUrl {...field} onRealChange={handleBaseUrlChange} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

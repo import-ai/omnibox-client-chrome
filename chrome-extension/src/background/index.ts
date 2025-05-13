@@ -3,7 +3,7 @@ import axios from '@extension/shared/lib/utils/axios';
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'collect') {
-    axios(`${request.baseUrl}/api/v1/wizard/collect`, {
+    axios(`${request.baseUrl.endsWith('/') ? request.baseUrl.slice(0, -1) : request.baseUrl}/api/v1/wizard/collect`, {
       apiKey: request.apiKey,
       data: {
         html: request.data,
