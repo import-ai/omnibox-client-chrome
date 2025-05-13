@@ -24,5 +24,5 @@ export default function ApiBaseUrl(props: IProps) {
     timer.current = setTimeout(onRealChange, 1000);
   };
 
-  return <Input value={value} onChange={handleChange} />;
+  return <Input type="url" value={value} onChange={handleChange} />;
 }

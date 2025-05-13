@@ -48,6 +48,7 @@ export default function Page() {
       form.resetField('apiKey');
       form.resetField('namespaceId');
       form.resetField('spaceType');
+      form.trigger(['apiBaseUrl']);
     });
   };
   const handleSubmit = (data: TForm) => {
