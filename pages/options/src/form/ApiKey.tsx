@@ -11,7 +11,7 @@ export default function ApiKey(props: IProps) {
   const { value, baseUrl } = props;
   const handleClick = () => {
     chrome.tabs.create({
-      url: `${baseUrl}/user/login?from=extension`,
+      url: `${baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl}/user/login?from=extension`,
     });
   };
 
