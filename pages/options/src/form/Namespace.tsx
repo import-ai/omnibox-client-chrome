@@ -30,7 +30,7 @@ export default function Namespace(props: IProps) {
     if (!baseUrl || !apiKey || !isValidStrictHttpRootDomain(baseUrl)) {
       return;
     }
-    axios(`${baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl}/api/v1/namespaces/user`, {
+    axios(`${baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl}/api/v1/namespaces`, {
       apiKey,
     })
       .then(data => {
