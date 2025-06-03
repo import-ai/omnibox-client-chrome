@@ -1,0 +1,74 @@
+name: Build and Release Extension
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+    branches:
+      - main
+  pull_request:
+    branches:
+      - 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Get version identifier
+        id: get_version
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${GITHUB_SHA}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build Chrome zip
+        run: pnpm zip
+
+      - name: Rename Chrome zip
+        run: |
+          mv dist-zip/*.zip omnibox-chrome-${{ steps.get_version.outputs.version }}.zip
+
+      - name: Build Firefox xpi
+        run: pnpm zip:firefox
+
+      - name: Rename Firefox xpi
+        run: |
+          mv dist-zip/*.xpi omnibox-firefox-${{ steps.get_version.outputs.version }}.xpi
+
+      - name: Upload Chrome zip artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: omnibox-chrome-${{ steps.get_version.outputs.version }}.zip
+          path: omnibox-chrome-${{ steps.get_version.outputs.version }}.zip
+
+      - name: Upload Firefox xpi artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: omnibox-firefox-${{ steps.get_version.outputs.version }}.xpi
+          path: omnibox-firefox-${{ steps.get_version.outputs.version }}.xpi
+
+      - name: Upload to GitHub Release
+        if: github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            omnibox-chrome-${{ steps.get_version.outputs.version }}.zip
+            omnibox-firefox-${{ steps.get_version.outputs.version }}.xpi
