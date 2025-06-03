@@ -1,0 +1,68 @@
+name: Build Extension
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - 'main'
+
+concurrency:
+  group: docker-build-pr-${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Get version identifier
+        id: get_version
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build Chrome
+        run: pnpm build
+
+      - name: Rename Chrome
+        run: |
+          mv dist omnibox-chrome-${{ steps.get_version.outputs.version }}
+
+      - name: Build Firefox
+        run: pnpm build:firefox
+
+      - name: Rename Firefox
+        run: |
+          mv dist omnibox-firefox-${{ steps.get_version.outputs.version }}
+
+      - name: Upload Chrome zip artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: omnibox-chrome-${{ steps.get_version.outputs.version }}
+          path: omnibox-chrome-${{ steps.get_version.outputs.version }}
+
+      - name: Upload Firefox xpi artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: omnibox-firefox-${{ steps.get_version.outputs.version }}
+          path: omnibox-firefox-${{ steps.get_version.outputs.version }}
