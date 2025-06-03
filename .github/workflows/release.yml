@@ -4,11 +4,6 @@ on:
   push:
     tags:
       - 'v*.*.*'
-    branches:
-      - main
-  pull_request:
-    branches:
-      - 'main'
 
 jobs:
   build:
@@ -52,18 +47,6 @@ jobs:
       - name: Rename Firefox xpi
         run: |
           mv dist-zip/*.xpi omnibox-firefox-${{ steps.get_version.outputs.version }}.xpi
-
-      - name: Upload Chrome zip artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: omnibox-chrome-${{ steps.get_version.outputs.version }}.zip
-          path: omnibox-chrome-${{ steps.get_version.outputs.version }}.zip
-
-      - name: Upload Firefox xpi artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: omnibox-firefox-${{ steps.get_version.outputs.version }}.xpi
-          path: omnibox-firefox-${{ steps.get_version.outputs.version }}.xpi
 
       - name: Upload to GitHub Release
         if: github.ref_type == 'tag'
